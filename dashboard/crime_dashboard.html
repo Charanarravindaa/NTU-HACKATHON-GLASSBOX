@@ -147,6 +147,14 @@
   #toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--card2);
            border: 1px solid var(--border); border-radius: 8px; padding: .7rem 1rem;
            font-size: .82rem; display: none; z-index: 999; max-width: 320px; }
+
+  /* Alert flash */
+  @keyframes alertFlash { 0%,100%{border-color:var(--border)} 50%{border-color:var(--red)} }
+  .alert-flash { animation: alertFlash .6s ease 3; }
+  .alert-row { display:flex;gap:.7rem;align-items:center;padding:.3rem 0;
+               border-bottom:1px solid var(--border);font-size:.78rem; }
+  .alert-row:last-child { border-bottom:none; }
+  input[type=range] { accent-color: var(--accent); cursor: pointer; }
 </style>
 </head>
 <body>
@@ -175,6 +183,25 @@
       <div class="metric"><div class="val indigo" id="m-classes">—</div><div class="lbl">Crime Classes</div></div>
       <div class="metric"><div class="val" id="m-train">—</div><div class="lbl">Training Samples</div></div>
       <div class="metric"><div class="val" id="m-chunks">—</div><div class="lbl">Feature Chunks</div></div>
+    </div>
+  </section>
+
+  <!-- Alert Log -->
+  <section class="card" id="alert-card">
+    <div class="card-header">
+      <h3>Alert Log <span id="alert-count" class="tag">0</span></h3>
+      <div style="display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;">
+        <label style="font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:.4rem;">
+          Threshold:
+          <input type="range" id="alert-threshold-slider" min="50" max="95" value="70" step="5"
+                 onchange="updateThreshold(this.value)" style="width:90px;">
+          <span id="threshold-val" style="font-family:var(--mono);color:var(--text);min-width:36px;">70%</span>
+        </label>
+        <button class="btn sm" onclick="clearAlerts()">Clear</button>
+      </div>
+    </div>
+    <div id="alert-list" style="max-height:180px;overflow-y:auto;">
+      <div style="color:var(--muted);font-size:.82rem;">No alerts — system nominal.</div>
     </div>
   </section>
 
@@ -734,6 +761,16 @@ async function runImageInference() {
       `Prediction: ${d.predicted_class}  (confidence ${(d.confidence*100).toFixed(1)}%)${lstmStr}\n\n` +
       `Top-5 classes:\n${topProbs}${chunkStr}${blameStr}`;
 
+    // Flash alert card and reload log if an alert was triggered
+    if (d.alert_triggered) {
+      const card = document.getElementById('alert-card');
+      card.classList.remove('alert-flash');
+      void card.offsetWidth; // reflow to restart animation
+      card.classList.add('alert-flash');
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      loadAlerts();
+    }
+
     renderTemporalPanel(d.temporal || {}, d.class_probabilities || {});
     renderGhostPanel(d.ghost_signals || {});
     renderOrderPanel(d.order_decomp || {});
@@ -956,6 +993,47 @@ async function loadPerVideoValidation() {
   }
 }
 
+// ── Alert system ──────────────────────────────────────────────────────────────
+async function loadAlerts() {
+  try {
+    const d = await api('/alerts?limit=10');
+    document.getElementById('alert-count').textContent = d.total || 0;
+    const el = document.getElementById('alert-list');
+    if (!d.alerts || d.alerts.length === 0) {
+      el.innerHTML = '<div style="color:var(--muted);font-size:.82rem;">No alerts — system nominal.</div>';
+      return;
+    }
+    el.innerHTML = d.alerts.map(a => {
+      const ts = new Date(a.timestamp).toLocaleTimeString();
+      const proxBadge = a.proximity_cluster != null
+        ? `<span style="font-size:.7rem;color:var(--amber);">cluster #${a.proximity_cluster}</span>`
+        : '';
+      return `<div class="alert-row">
+        <span style="color:var(--muted);font-family:var(--mono);font-size:.72rem;min-width:64px;">${ts}</span>
+        <span style="background:var(--red);color:#fff;border-radius:4px;padding:.1rem .4rem;font-size:.7rem;font-weight:700;">ANOMALY</span>
+        <span style="color:var(--text);">${(a.confidence * 100).toFixed(1)}%</span>
+        <span style="color:var(--accent2);">${a.dominant_chunk || '—'}</span>
+        ${proxBadge}
+      </div>`;
+    }).join('');
+  } catch (e) { /* API offline */ }
+}
+
+async function clearAlerts() {
+  try {
+    await api('/alerts/clear', 'POST');
+    await loadAlerts();
+    toast('Alert log cleared.');
+  } catch (e) { toast('Failed: ' + e.message); }
+}
+
+async function updateThreshold(val) {
+  document.getElementById('threshold-val').textContent = val + '%';
+  try {
+    await api('/alerts/threshold', 'POST', { threshold: parseInt(val) / 100 });
+  } catch (e) { /* ignore */ }
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function refreshAll() {
   await loadModelInfo();
@@ -963,10 +1041,12 @@ async function refreshAll() {
   await loadHealHistory();
   loadSubChunkProfiles();
   loadPerVideoValidation();
+  loadAlerts();
 }
 
 mkHealChart();
 refreshAll();
+setInterval(loadAlerts, 5000);
 </script>
 </body>
 </html>

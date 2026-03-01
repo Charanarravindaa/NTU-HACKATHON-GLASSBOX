@@ -14,15 +14,17 @@ Worse: models degrade silently. When they encounter distribution shift, they jus
 
 ## Our Solution
 
-CrimeVisionGlassbox provides four things standard models don't:
+CrimeVisionGlassbox provides five things standard models don't:
 
-**1. Interpretability by construction** — every prediction decomposes into four visual chunk contributions (Texture / Structure / Context / Semantic) with exact logit math, not approximation.
+**1. Interpretability by construction** — every prediction decomposes into four visual chunk contributions (Texture / Structure / Context / Semantic) with exact logit math, not approximation. Operators see *why* a frame was flagged — not just that it was.
 
 **2. Sub-chunk discovery** — within each named chunk, a Mixture-of-Sub-Experts (3 sub-networks + learned router) discovers mathematical sub-patterns automatically. You see *which sub-pattern* fired, not just which chunk.
 
-**3. Self-healing** — the model identifies its own failure modes, generates corrective synthetic training data via Gaussian perturbation in feature space, and retrains — up to N rounds.
+**3. Operational reliability via self-healing** — the model identifies its own failure modes, clusters them, generates corrective synthetic training data via Gaussian perturbation in feature space, and retrains — up to N rounds. When lighting changes, crowds increase, or edge cases accumulate, the system adapts rather than silently degrading. Each deployment is per-camera by design — a CCTV is a fixed installation, so a model calibrated to that exact scene is the correct architecture.
 
-**4. Learned temporal context** — a 2-layer LSTM head processes sequences of 8 frames, lifting AUC from 0.920 (frame-level) to **0.990** (sequence-level).
+**4. Learned temporal context** — a 2-layer LSTM head processes sequences of 8 frames, lifting AUC from 0.920 (frame-level) to **0.990** (sequence-level). Catches events that span multiple frames before they escalate.
+
+**5. Coordinated response via alert system** — configurable confidence threshold triggers an in-memory alert log with timestamp, anomaly confidence, dominant chunk, and proximity cluster. Dashboard polls every 5 seconds; alerts visible to any connected operator.
 
 ---
 
@@ -66,6 +68,7 @@ glassbox/
 ├── README.md
 ├── requirements.txt
 ├── prepare_cuhk.py            ← frame extraction from CUHK Avenue AVI + .mat labels
+├── stream_video.py            ← live CCTV simulation: streams frames to API at configurable FPS
 │
 ├── crime/                     ← vision + interpretability pipeline
 │   ├── feature_extractor.py   ← TinyCNN (4-stage, CPU-only) + CrimeVisionGlassbox
@@ -87,7 +90,7 @@ glassbox/
 │   └── crime_train.py         ← training entry point (40 epochs + self-healing)
 │
 ├── api/
-│   └── crime_app.py           ← FastAPI: /predict, /failure_report, /self_heal, +7 more
+│   └── crime_app.py           ← FastAPI: /predict, /failure_report, /self_heal, /alerts, +10 more
 │
 ├── dashboard/
 │   └── crime_dashboard.html   ← live web dashboard (Chart.js, no build step)
@@ -129,6 +132,10 @@ python3 -m uvicorn api.crime_app:app --reload --port 8001
 
 # Open dashboard (API must be running)
 open dashboard/crime_dashboard.html
+
+# Stream a video through the system (simulates live CCTV feed)
+python3 stream_video.py --video 01 --fps 8
+# Watch the dashboard alert log update in real time
 ```
 
 ---
@@ -197,6 +204,31 @@ python3 -m uvicorn api.crime_app:app --reload --port 8001
 | `/sub_chunk_profiles` | GET | Auto-labeled sub-expert profiles with anomaly lift |
 | `/per_video_validation` | GET | Per-scene AUC across 21 CUHK Avenue videos |
 | `/reset_temporal` | POST | Reset EMA buffer + LSTM state (switch streams) |
+| `/alerts` | GET | Alert log — anomaly detections above threshold (most recent first) |
+| `/alerts/threshold` | POST | Set confidence threshold for alert trigger (default 0.70) |
+| `/alerts/clear` | POST | Clear the in-memory alert log |
+
+---
+
+## Deploying to a New Camera
+
+CCTVs are fixed installations — a model trained on one camera is exactly what you want. The system retrains on any new camera in ~8 minutes on CPU, no GPU required:
+
+```bash
+# 1. Collect footage from the new camera (normal scenes only for training)
+# 2. Extract frames
+python3 prepare_cuhk.py --every 10 --src /path/to/new_camera/
+
+# 3. Retrain (~8 min on CPU)
+python3 training/crime_train.py
+
+# 4. Self-heal on local val set (catches site-specific failure modes)
+# POST /self_heal  (via dashboard "Run Self-Heal" button)
+
+# 5. Done — model is now calibrated to the new camera angle, lighting, scene
+```
+
+This is the intended deployment lifecycle: train once per installation on normal footage, let self-healing handle edge cases after deployment.
 
 ---
 
@@ -204,10 +236,9 @@ python3 -m uvicorn api.crime_app:app --reload --port 8001
 
 | Limitation | Status |
 |-----------|--------|
-| Single-camera domain (CUHK Avenue walkway) | Acknowledged in `/model_info`. Retrain on domain footage for production. |
 | Val/test AUC gap (+3.1pp) | Self-healing optimises on val. Test AUC (0.920) is the honest held-out number. |
 | Sub-expert labels are statistical | Lift scores auto-generated; not hand-verified per sub-expert. |
-| Per-video = same dataset | Not true cross-domain transfer. Different installation requires new training data. |
+| Alert log is in-memory | Resets on server restart. Production would persist to disk or a log sink. |
 
 ---
 

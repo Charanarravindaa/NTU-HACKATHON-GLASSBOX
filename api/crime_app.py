@@ -27,6 +27,7 @@ import json
 import numpy as np
 import torch
 from PIL import Image
+from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
@@ -70,6 +71,9 @@ _y_train    = None
 _X_val      = None
 _y_val      = None
 _heal_history: list = []
+_alert_log:      list  = []
+_alert_counter:  int   = 0
+_alert_threshold: float = 0.70
 _smoother:    TemporalSmoother  = TemporalSmoother(window=8, alpha=0.4)
 _lstm_head:   TemporalLSTMHead | None = None
 _lstm_meta:   dict = {}
@@ -128,6 +132,14 @@ def _load_artefacts():
         _lstm_head.eval()
         _lstm_head.reset_state()
         print(f"[crime_app] LSTM head loaded (val_auc={_lstm_meta.get('val_auc')})")
+
+    # Re-create smoother with correct anomaly class index now that meta is loaded
+    global _smoother
+    anomaly_idx = next(
+        (i for i, n in enumerate(_meta.get('class_names', [])) if 'anomaly' in n.lower()),
+        1,
+    )
+    _smoother = TemporalSmoother(window=8, alpha=0.4, anomaly_class=anomaly_idx)
 
     if os.path.exists(feat_path):
         d = np.load(feat_path)
@@ -226,10 +238,35 @@ def _predict_from_image_tensor(x_img: torch.Tensor, true_class: int = None) -> d
             'note': 'Learned LSTM over 8-frame sequences (val AUC 0.990 vs frame-level 0.920)',
         }
 
+    # ── Auto-alert ──────────────────────────────────────────────────────────────
+    global _alert_counter
+    is_anomaly = 'anomaly' in _class_name(pred).lower()
+    alert_triggered = is_anomaly and float(probs[pred]) >= _alert_threshold
+    if alert_triggered:
+        _alert_counter += 1
+        contribs = audit.get('chunk_contributions', {})
+        dominant_chunk = (
+            max(contribs, key=lambda k: abs(contribs[k].get('pred_push',
+                                             contribs[k].get('disease_push', 0))))
+            if contribs else None
+        )
+        _alert_log.append({
+            'id':               _alert_counter,
+            'timestamp':        datetime.now(timezone.utc).isoformat(),
+            'predicted_class':  _class_name(pred),
+            'confidence':       round(float(probs[pred]), 4),
+            'dominant_chunk':   dominant_chunk,
+            'proximity_cluster': proximity.get('nearest_cluster') if proximity.get('warning') else None,
+        })
+        if len(_alert_log) > 100:
+            _alert_log.pop(0)
+
     return {
         'prediction':           pred,
         'predicted_class':      _class_name(pred),
         'confidence':           round(float(probs[pred]), 4),
+        'alert_triggered':      alert_triggered,
+        'alert_threshold':      _alert_threshold,
         'class_probabilities':  {_class_name(i): round(float(p), 4)
                                   for i, p in enumerate(probs)},
         'temporal': {
@@ -509,3 +546,41 @@ def reset_temporal():
     if _lstm_head is not None:
         _lstm_head.reset_state()
     return {'status': 'ok', 'message': 'Temporal buffer and LSTM state cleared.'}
+
+
+# ── Alert system ───────────────────────────────────────────────────────────────
+
+@app.get("/alerts")
+def get_alerts(limit: int = 20):
+    """
+    Return the in-memory alert log (most recent first).
+    Alerts are auto-generated when an Anomaly prediction exceeds the confidence threshold.
+    """
+    return {
+        'threshold':  _alert_threshold,
+        'total':      len(_alert_log),
+        'alerts':     list(reversed(_alert_log[-limit:])),
+    }
+
+
+class AlertThresholdRequest(BaseModel):
+    threshold: float
+
+
+@app.post("/alerts/threshold")
+def set_alert_threshold(req: AlertThresholdRequest):
+    """Update the confidence threshold that triggers an alert (0.0–1.0)."""
+    global _alert_threshold
+    if not 0.0 <= req.threshold <= 1.0:
+        raise HTTPException(400, "Threshold must be between 0.0 and 1.0.")
+    _alert_threshold = req.threshold
+    return {'status': 'ok', 'threshold': _alert_threshold}
+
+
+@app.post("/alerts/clear")
+def clear_alerts():
+    """Clear the in-memory alert log."""
+    global _alert_log, _alert_counter
+    _alert_log.clear()
+    _alert_counter = 0
+    return {'status': 'ok', 'message': 'Alert log cleared.'}

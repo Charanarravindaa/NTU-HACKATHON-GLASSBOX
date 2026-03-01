@@ -112,10 +112,10 @@ Wait for: `INFO:     Application startup complete.`
 
 ```bash
 curl http://localhost:8001/health
-# {"status": "ok", "model_loaded": true}
+# {"status":"ok","model_loaded":true,"failure_map":true,"n_clusters":5}
 
 curl http://localhost:8001/model_info
-# {"n_classes": 2, "class_names": ["Anomaly", "Normal"], "test_auc": 0.9231, ...}
+# {"n_classes": 2, "class_names": ["Anomaly", "Normal"], "test_auc": 0.920, ...}
 ```
 
 ### 5c. Run a prediction via API
@@ -125,18 +125,20 @@ curl -X POST http://localhost:8001/predict \
   -F "file=@testbench/sample_frames/Anomaly/01_f000640.png"
 ```
 
-Example response:
+Key fields in the response:
 ```json
 {
   "predicted_class": "Anomaly",
   "confidence": 1.0,
-  "class_probabilities": {"Anomaly": 1.0, "Normal": 0.0},
-  "chunk_attributions": {
-    "Texture": {"pred_push": -0.86, "true_push": -0.86, "blame": 0.0},
-    "Structure": {"pred_push": 0.63, ...},
-    "Context": {"pred_push": 4.24, ...},
-    "Semantic": {"pred_push": 0.61, ...}
-  }
+  "alert_triggered": true,
+  "chunk_contributions": {
+    "Texture":   {"pred_push": -0.86},
+    "Structure": {"pred_push":  0.63},
+    "Context":   {"pred_push":  4.24},
+    "Semantic":  {"pred_push":  0.61}
+  },
+  "ghost_signals": {"Texture→Structure": 0.021, ...},
+  "lstm_temporal": {"lstm_pred": "Anomaly", "lstm_confidence": 0.98}
 }
 ```
 
@@ -152,7 +154,31 @@ curl http://localhost:8001/failure_report
 curl -X POST http://localhost:8001/self_heal
 ```
 
-### 5f. Open the live dashboard
+### 5f. Check the alert log
+
+```bash
+curl http://localhost:8001/alerts
+# {"threshold": 0.7, "total": 1, "alerts": [{"id":1,"timestamp":"...","predicted_class":"Anomaly","confidence":1.0,"dominant_chunk":"Context"}]}
+
+# Update threshold
+curl -X POST http://localhost:8001/alerts/threshold \
+  -H "Content-Type: application/json" -d '{"threshold": 0.85}'
+
+# Clear log
+curl -X POST http://localhost:8001/alerts/clear
+```
+
+### 5g. Stream a video through the system (live CCTV simulation)
+
+In a second terminal (API must be running):
+
+```bash
+python3 stream_video.py --video 01 --fps 8
+```
+
+Watch the dashboard alert log update in real time as anomaly frames are processed.
+
+### 5h. Open the live dashboard
 
 Open `dashboard/crime_dashboard.html` in your browser.
 
@@ -228,11 +254,13 @@ Artefacts saved to artefacts/
 
 | File | Purpose |
 |------|---------|
-| `testbench/test_pipeline.py` | **Main test** — run this to verify the system |
+| `testbench/test_pipeline.py` | **Main test** — run this to verify the system (no server needed) |
 | `testbench/sample_frames/` | 20 labeled PNG frames for testing |
+| `stream_video.py` | **Live demo** — streams CUHK Avenue frames to API, simulates CCTV feed |
 | `artefacts/crime_vision.pt` | Trained model weights |
+| `artefacts/temporal_lstm.pt` | LSTM temporal head weights |
 | `artefacts/crime_meta.json` | Model config + performance metrics |
 | `training/crime_train.py` | Full training script |
 | `prepare_cuhk.py` | Dataset preparation from CUHK Avenue |
-| `api/crime_app.py` | FastAPI server |
+| `api/crime_app.py` | FastAPI server (14 endpoints) |
 | `dashboard/crime_dashboard.html` | Live web dashboard |
