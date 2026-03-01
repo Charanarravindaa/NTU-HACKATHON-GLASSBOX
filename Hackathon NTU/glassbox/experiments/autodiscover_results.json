@@ -1,0 +1,115 @@
+{
+  "dataset": "breast_cancer",
+  "chunks": {
+    "Chunk0": [
+      1,
+      21
+    ],
+    "Chunk1": [
+      0,
+      2,
+      3,
+      10,
+      12,
+      13,
+      20,
+      22,
+      23
+    ],
+    "Chunk2": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "Chunk3": [
+      11,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ]
+  },
+  "chunk_names": {
+    "Chunk0": [
+      "mean texture",
+      "worst texture"
+    ],
+    "Chunk1": [
+      "mean radius",
+      "mean perimeter",
+      "mean area",
+      "radius error",
+      "perimeter error",
+      "area error",
+      "worst radius",
+      "worst perimeter",
+      "worst area"
+    ],
+    "Chunk2": [
+      "mean smoothness",
+      "mean compactness",
+      "mean concavity",
+      "mean concave points",
+      "mean symmetry",
+      "mean fractal dimension",
+      "worst smoothness",
+      "worst compactness",
+      "worst concavity",
+      "worst concave points",
+      "worst symmetry",
+      "worst fractal dimension"
+    ],
+    "Chunk3": [
+      "texture error",
+      "smoothness error",
+      "compactness error",
+      "concavity error",
+      "concave points error",
+      "symmetry error",
+      "fractal dimension error"
+    ]
+  },
+  "glassbox": {
+    "acc": 0.9649122807017544,
+    "auc": 0.9983465608465608
+  },
+  "ghost_only": {
+    "acc": 0.9298245614035088,
+    "auc": 0.9910714285714285
+  },
+  "ablation": {
+    "acc": 0.9649122807017544,
+    "auc": 0.9950396825396826
+  },
+  "baseline": {
+    "acc": 0.9649122807017544,
+    "auc": 0.9894179894179894
+  },
+  "gate_lift": 0.0,
+  "order_lift": 0.0351,
+  "gate_weights": {
+    "C0\u2192C1": 0.12218519300222397,
+    "C0\u2192C2": 0.12218519300222397,
+    "C0\u2192C3": 0.13208931684494019,
+    "C1\u2192C2": 0.12218519300222397,
+    "C1\u2192C3": 0.13024693727493286,
+    "C2\u2192C3": 0.1250637024641037
+  },
+  "order_weights": {
+    "Chunk0": 0.252198189496994,
+    "Chunk1": 0.33725687861442566,
+    "Chunk2": 0.3417825400829315,
+    "Chunk3": 0.2303009182214737
+  }
+}

@@ -1,0 +1,2062 @@
+{
+  "wrong": [
+    {
+      "index": 3,
+      "prediction": 1,
+      "ground_truth": 0,
+      "prediction_label": "Heart Disease",
+      "ground_truth_label": "No Disease",
+      "verdict_message": "The Vitals chunk is the primary driver (logit push=+2.02 toward disease). Ghost Signal 'Demographics\u2192Vitals' is anomalously active (\u03b1=0.009 (z=+2.19 vs population), magnitude z=2.83) and is pushing toward disease (force=+0.000). Patient demographics (age/sex/cp) over-influenced the cardiovascular vitals interpretation, biasing the prediction pathway.",
+      "verdict_cause": "Ghost Signal Anomaly",
+      "verdict_confidence": 0.925,
+      "dominant_chunk": "Vitals",
+      "features": {
+        "age": 0.24717394664990022,
+        "sex": -1.4414999403128919,
+        "cp": 0.853347655315247,
+        "trestbps": -0.2388432459219336,
+        "chol": 1.0101913805396432,
+        "thalach": 0.40966557848326246,
+        "fbs": -0.45060590905933257,
+        "restecg": 1.023522981156165,
+        "oldpeak": -0.9018778563147419,
+        "slope": -0.9545208552932015,
+        "ca": 0.3494040532460302,
+        "thal": -0.9313507384682232,
+        "exang": -0.7273460373608411
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": 0.5252,
+          "healthy_logit": -0.1896,
+          "disease_push": 0.7148
+        },
+        "Vitals": {
+          "disease_logit": 1.0084,
+          "healthy_logit": -1.0132,
+          "disease_push": 2.0216
+        },
+        "LabDiagnostic": {
+          "disease_logit": 0.4708,
+          "healthy_logit": -0.429,
+          "disease_push": 0.8998
+        },
+        "Structural": {
+          "disease_logit": 0.4209,
+          "healthy_logit": -0.7287,
+          "disease_push": 1.1496
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0087,
+          "alpha_zscore": 2.191,
+          "magnitude": 0.01,
+          "magnitude_zscore": 2.835,
+          "anomalous": true,
+          "strength": "weak",
+          "disease_direction": 0.0003,
+          "pushing": "toward_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0243,
+          "alpha_zscore": 0.414,
+          "magnitude": 0.0204,
+          "magnitude_zscore": 0.005,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0024,
+          "pushing": "away_from_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.2186,
+          "alpha_zscore": -0.638,
+          "magnitude": 0.3468,
+          "magnitude_zscore": -0.973,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": 0.1347,
+          "pushing": "toward_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0146,
+          "alpha_zscore": -0.428,
+          "magnitude": 0.0088,
+          "magnitude_zscore": -0.322,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": 0.0003,
+          "pushing": "toward_disease"
+        }
+      }
+    },
+    {
+      "index": 6,
+      "prediction": 0,
+      "ground_truth": 1,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "Heart Disease",
+      "verdict_message": "The Vitals chunk is the primary driver (logit push=-2.42 away from disease). Ghost Signal 'LabDiag\u2192Structural' is anomalously active (\u03b1=0.828 (z=+1.84 vs population), magnitude z=1.66) and is pushing toward disease (force=+5.790). Lab diagnostic signals (fbs/restecg/slope) abnormally coupled with structural findings (ca/thal), amplifying structural risk indicators.",
+      "verdict_cause": "Ghost Signal Anomaly",
+      "verdict_confidence": 0.776,
+      "dominant_chunk": "Vitals",
+      "features": {
+        "age": 0.35812134315752603,
+        "sex": 0.6937218462755793,
+        "cp": -0.19454557945010806,
+        "trestbps": -0.015104711204549731,
+        "chol": -0.4789679941429601,
+        "thalach": 1.0360574630028323,
+        "fbs": -0.45060590905933257,
+        "restecg": 1.023522981156165,
+        "oldpeak": 1.8166601652635592,
+        "slope": -0.9545208552932015,
+        "ca": 1.438993008763256,
+        "thal": 1.1315476261763457,
+        "exang": -0.7273460373608411
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": -0.8697,
+          "healthy_logit": 0.6138,
+          "disease_push": -1.4835
+        },
+        "Vitals": {
+          "disease_logit": -1.2065,
+          "healthy_logit": 1.21,
+          "disease_push": -2.4165
+        },
+        "LabDiagnostic": {
+          "disease_logit": 1.0141,
+          "healthy_logit": -0.4551,
+          "disease_push": 1.4691
+        },
+        "Structural": {
+          "disease_logit": -0.6166,
+          "healthy_logit": 0.7942,
+          "disease_push": -1.4108
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.003,
+          "alpha_zscore": -0.171,
+          "magnitude": 0.004,
+          "magnitude_zscore": 0.132,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0006,
+          "pushing": "away_from_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0022,
+          "alpha_zscore": -0.343,
+          "magnitude": 0.0053,
+          "magnitude_zscore": -0.275,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": 0.0001,
+          "pushing": "toward_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.8283,
+          "alpha_zscore": 1.838,
+          "magnitude": 6.0725,
+          "magnitude_zscore": 1.655,
+          "anomalous": true,
+          "strength": "ANOMALOUS",
+          "disease_direction": 5.79,
+          "pushing": "toward_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0009,
+          "alpha_zscore": -0.531,
+          "magnitude": 0.0026,
+          "magnitude_zscore": -0.335,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0006,
+          "pushing": "away_from_disease"
+        }
+      }
+    },
+    {
+      "index": 8,
+      "prediction": 0,
+      "ground_truth": 1,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "Heart Disease",
+      "verdict_message": "The LabDiagnostic chunk is the primary driver (logit push=-1.50 away from disease). Suspected Ghost Signal contribution from 'Demographics\u2192Vitals' (magnitude z=-0.30, pushing away from disease). Patient demographics (age/sex/cp) over-influenced the cardiovascular vitals interpretation, biasing the prediction pathway.",
+      "verdict_cause": "Suspected Ghost Signal",
+      "verdict_confidence": 0.35,
+      "dominant_chunk": "LabDiagnostic",
+      "features": {
+        "age": 0.5800161361727776,
+        "sex": 0.6937218462755793,
+        "cp": -0.19454557945010806,
+        "trestbps": 0.43237235823021797,
+        "chol": -1.2141226221508274,
+        "thalach": 0.23069646862052828,
+        "fbs": -0.45060590905933257,
+        "restecg": 1.023522981156165,
+        "oldpeak": 1.6467515389149154,
+        "slope": 0.6729715382642718,
+        "ca": -0.7401849022711956,
+        "thal": -0.9313507384682232,
+        "exang": -0.7273460373608411
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": -0.7323,
+          "healthy_logit": 0.5076,
+          "disease_push": -1.2399
+        },
+        "Vitals": {
+          "disease_logit": -0.4173,
+          "healthy_logit": 0.4379,
+          "disease_push": -0.8552
+        },
+        "LabDiagnostic": {
+          "disease_logit": -0.7123,
+          "healthy_logit": 0.7829,
+          "disease_push": -1.4952
+        },
+        "Structural": {
+          "disease_logit": -0.4713,
+          "healthy_logit": 0.6049,
+          "disease_push": -1.0762
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.005,
+          "alpha_zscore": 0.64,
+          "magnitude": 0.003,
+          "magnitude_zscore": -0.298,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0005,
+          "pushing": "away_from_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0011,
+          "alpha_zscore": -0.383,
+          "magnitude": 0.0018,
+          "magnitude_zscore": -0.341,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0,
+          "pushing": "away_from_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.4976,
+          "alpha_zscore": 0.495,
+          "magnitude": 3.7255,
+          "magnitude_zscore": 0.578,
+          "anomalous": false,
+          "strength": "moderate",
+          "disease_direction": -4.2456,
+          "pushing": "away_from_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0271,
+          "alpha_zscore": -0.334,
+          "magnitude": 0.069,
+          "magnitude_zscore": -0.199,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0005,
+          "pushing": "away_from_disease"
+        }
+      }
+    },
+    {
+      "index": 13,
+      "prediction": 0,
+      "ground_truth": 1,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "Heart Disease",
+      "verdict_message": "The Vitals chunk is the primary driver (logit push=-2.02 away from disease). Noisy activations detected in: Structural. High L2 norm indicates the chunk received conflicting signals.",
+      "verdict_cause": "Chunk Activation Noise",
+      "verdict_confidence": 0.6,
+      "dominant_chunk": "Vitals",
+      "features": {
+        "age": -0.6404052254111061,
+        "sex": 0.6937218462755793,
+        "cp": -0.19454557945010806,
+        "trestbps": -0.6863203153567012,
+        "chol": -1.1575722661502224,
+        "thalach": -0.48517997083040854,
+        "fbs": -0.45060590905933257,
+        "restecg": -0.9895471145617695,
+        "oldpeak": 0.7972084071716963,
+        "slope": 0.6729715382642718,
+        "ca": 2.528581964280482,
+        "thal": 1.1315476261763457,
+        "exang": -0.7273460373608411
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": -0.2221,
+          "healthy_logit": 0.0702,
+          "disease_push": -0.2923
+        },
+        "Vitals": {
+          "disease_logit": -1.0647,
+          "healthy_logit": 0.9578,
+          "disease_push": -2.0225
+        },
+        "LabDiagnostic": {
+          "disease_logit": 1.0274,
+          "healthy_logit": -0.9219,
+          "disease_push": 1.9493
+        },
+        "Structural": {
+          "disease_logit": 0.0209,
+          "healthy_logit": 0.0246,
+          "disease_push": -0.0037
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.005,
+          "alpha_zscore": 0.67,
+          "magnitude": 0.0059,
+          "magnitude_zscore": 0.982,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0007,
+          "pushing": "away_from_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.002,
+          "alpha_zscore": -0.35,
+          "magnitude": 0.0018,
+          "magnitude_zscore": -0.34,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0006,
+          "pushing": "away_from_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.2823,
+          "alpha_zscore": -0.38,
+          "magnitude": 1.3122,
+          "magnitude_zscore": -0.53,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": 1.4907,
+          "pushing": "toward_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0512,
+          "alpha_zscore": -0.153,
+          "magnitude": 0.0598,
+          "magnitude_zscore": -0.218,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0007,
+          "pushing": "away_from_disease"
+        }
+      }
+    },
+    {
+      "index": 15,
+      "prediction": 0,
+      "ground_truth": 1,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "Heart Disease",
+      "verdict_message": "The Structural chunk is the primary driver (logit push=-2.13 away from disease). Suspected Ghost Signal contribution from 'Demographics\u2192LabDiag' (magnitude z=0.48, pushing away from disease). Demographic baseline (age/sex/cp) created strong priors that suppressed the lab diagnostic signal, causing under-estimation of clinical severity.",
+      "verdict_cause": "Suspected Ghost Signal",
+      "verdict_confidence": 0.35,
+      "dominant_chunk": "Structural",
+      "features": {
+        "age": -1.0841948114416093,
+        "sex": 0.6937218462755793,
+        "cp": -2.2903320489808183,
+        "trestbps": -1.245666652150161,
+        "chol": 0.27503675253177573,
+        "thalach": -0.7983759130901934,
+        "fbs": -0.45060590905933257,
+        "restecg": -0.9895471145617695,
+        "oldpeak": 0.11757390177712099,
+        "slope": 0.6729715382642718,
+        "ca": -0.7401849022711956,
+        "thal": 1.1315476261763457,
+        "exang": -0.7273460373608411
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": -1.3646,
+          "healthy_logit": 0.7251,
+          "disease_push": -2.0897
+        },
+        "Vitals": {
+          "disease_logit": 0.4563,
+          "healthy_logit": -0.5488,
+          "disease_push": 1.005
+        },
+        "LabDiagnostic": {
+          "disease_logit": 0.0531,
+          "healthy_logit": -0.1892,
+          "disease_push": 0.2423
+        },
+        "Structural": {
+          "disease_logit": -0.8938,
+          "healthy_logit": 1.2382,
+          "disease_push": -2.1319
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0051,
+          "alpha_zscore": 0.707,
+          "magnitude": 0.0043,
+          "magnitude_zscore": 0.292,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0013,
+          "pushing": "away_from_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0117,
+          "alpha_zscore": -0.019,
+          "magnitude": 0.0109,
+          "magnitude_zscore": -0.171,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.004,
+          "pushing": "away_from_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.2247,
+          "alpha_zscore": -0.614,
+          "magnitude": 0.7253,
+          "magnitude_zscore": -0.799,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.7525,
+          "pushing": "away_from_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.2381,
+          "alpha_zscore": 1.25,
+          "magnitude": 0.4001,
+          "magnitude_zscore": 0.479,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0013,
+          "pushing": "away_from_disease"
+        }
+      }
+    },
+    {
+      "index": 27,
+      "prediction": 0,
+      "ground_truth": 1,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "Heart Disease",
+      "verdict_message": "The Vitals chunk is the primary driver (logit push=-4.80 away from disease). Noisy activations detected in: Vitals. High L2 norm indicates the chunk received conflicting signals.",
+      "verdict_cause": "Chunk Activation Noise",
+      "verdict_confidence": 0.6,
+      "dominant_chunk": "Vitals",
+      "features": {
+        "age": 1.356647911726158,
+        "sex": 0.6937218462755793,
+        "cp": 0.853347655315247,
+        "trestbps": -0.6863203153567012,
+        "chol": -0.23391645147367093,
+        "thalach": -3.52765483849689,
+        "fbs": -0.45060590905933257,
+        "restecg": -0.9895471145617695,
+        "oldpeak": -0.05233472457152279,
+        "slope": 0.6729715382642718,
+        "ca": -0.7401849022711956,
+        "thal": -0.9313507384682232,
+        "exang": -0.7273460373608411
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": 0.0454,
+          "healthy_logit": -0.1234,
+          "disease_push": 0.1688
+        },
+        "Vitals": {
+          "disease_logit": -2.4183,
+          "healthy_logit": 2.3792,
+          "disease_push": -4.7975
+        },
+        "LabDiagnostic": {
+          "disease_logit": -0.6583,
+          "healthy_logit": 0.4822,
+          "disease_push": -1.1405
+        },
+        "Structural": {
+          "disease_logit": 0.1754,
+          "healthy_logit": -0.257,
+          "disease_push": 0.4325
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0002,
+          "alpha_zscore": -1.321,
+          "magnitude": 0.0008,
+          "magnitude_zscore": -1.276,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0002,
+          "pushing": "away_from_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0001,
+          "alpha_zscore": -0.417,
+          "magnitude": 0.0001,
+          "magnitude_zscore": -0.371,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0,
+          "pushing": "away_from_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.2629,
+          "alpha_zscore": -0.458,
+          "magnitude": 1.8631,
+          "magnitude_zscore": -0.277,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -2.1124,
+          "pushing": "away_from_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0032,
+          "alpha_zscore": -0.513,
+          "magnitude": 0.0032,
+          "magnitude_zscore": -0.334,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0002,
+          "pushing": "away_from_disease"
+        }
+      }
+    },
+    {
+      "index": 39,
+      "prediction": 0,
+      "ground_truth": 1,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "Heart Disease",
+      "verdict_message": "The Vitals chunk is the primary driver (logit push=-3.84 away from disease). Ghost Signal 'LabDiag\u2192Structural' is anomalously active (\u03b1=0.831 (z=+1.85 vs population), magnitude z=0.56) and is pushing toward disease (force=+4.109). Lab diagnostic signals (fbs/restecg/slope) abnormally coupled with structural findings (ca/thal), amplifying structural risk indicators.",
+      "verdict_cause": "Ghost Signal Anomaly",
+      "verdict_confidence": 0.777,
+      "dominant_chunk": "Vitals",
+      "features": {
+        "age": 0.13622655014227444,
+        "sex": 0.6937218462755793,
+        "cp": 0.853347655315247,
+        "trestbps": -0.12697397856324166,
+        "chol": 0.6331890072022753,
+        "thalach": -2.0959019595950164,
+        "fbs": 2.219234102117213,
+        "restecg": 1.023522981156165,
+        "oldpeak": 0.45739115447440876,
+        "slope": 2.3004639318217452,
+        "ca": -0.7401849022711956,
+        "thal": 1.1315476261763457,
+        "exang": 1.3748614120845168
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": -0.0647,
+          "healthy_logit": 0.055,
+          "disease_push": -0.1197
+        },
+        "Vitals": {
+          "disease_logit": -1.9971,
+          "healthy_logit": 1.8455,
+          "disease_push": -3.8425
+        },
+        "LabDiagnostic": {
+          "disease_logit": 0.8031,
+          "healthy_logit": -0.6874,
+          "disease_push": 1.4905
+        },
+        "Structural": {
+          "disease_logit": -0.0157,
+          "healthy_logit": 0.0126,
+          "disease_push": -0.0284
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0013,
+          "alpha_zscore": -0.851,
+          "magnitude": 0.0036,
+          "magnitude_zscore": -0.038,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0011,
+          "pushing": "away_from_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0,
+          "alpha_zscore": -0.418,
+          "magnitude": 0.0001,
+          "magnitude_zscore": -0.37,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0,
+          "pushing": "away_from_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.8308,
+          "alpha_zscore": 1.848,
+          "magnitude": 3.6793,
+          "magnitude_zscore": 0.556,
+          "anomalous": true,
+          "strength": "ANOMALOUS",
+          "disease_direction": 4.109,
+          "pushing": "toward_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0003,
+          "alpha_zscore": -0.535,
+          "magnitude": 0.0008,
+          "magnitude_zscore": -0.339,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0011,
+          "pushing": "away_from_disease"
+        }
+      }
+    },
+    {
+      "index": 48,
+      "prediction": 0,
+      "ground_truth": 1,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "Heart Disease",
+      "verdict_message": "The LabDiagnostic chunk is the primary driver (logit push=-1.48 away from disease). Suspected Ghost Signal contribution from 'Demographics\u2192Vitals' (magnitude z=-1.24, pushing away from disease). Patient demographics (age/sex/cp) over-influenced the cardiovascular vitals interpretation, biasing the prediction pathway.",
+      "verdict_cause": "Suspected Ghost Signal",
+      "verdict_confidence": 0.374,
+      "dominant_chunk": "LabDiagnostic",
+      "features": {
+        "age": 1.356647911726158,
+        "sex": 0.6937218462755793,
+        "cp": -0.19454557945010806,
+        "trestbps": 1.1035879623823694,
+        "chol": -0.7051694181453808,
+        "thalach": 0.006985081292110521,
+        "fbs": -0.45060590905933257,
+        "restecg": 1.023522981156165,
+        "oldpeak": -0.22224335092016656,
+        "slope": 0.6729715382642718,
+        "ca": -0.7401849022711956,
+        "thal": 1.1315476261763457,
+        "exang": -0.7273460373608411
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": -0.8139,
+          "healthy_logit": 0.478,
+          "disease_push": -1.2919
+        },
+        "Vitals": {
+          "disease_logit": -0.1247,
+          "healthy_logit": 0.1604,
+          "disease_push": -0.2851
+        },
+        "LabDiagnostic": {
+          "disease_logit": -0.837,
+          "healthy_logit": 0.6466,
+          "disease_push": -1.4836
+        },
+        "Structural": {
+          "disease_logit": -0.5444,
+          "healthy_logit": 0.7072,
+          "disease_push": -1.2516
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0023,
+          "alpha_zscore": -0.47,
+          "magnitude": 0.0009,
+          "magnitude_zscore": -1.241,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0001,
+          "pushing": "away_from_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0022,
+          "alpha_zscore": -0.344,
+          "magnitude": 0.003,
+          "magnitude_zscore": -0.318,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0002,
+          "pushing": "away_from_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.4541,
+          "alpha_zscore": 0.318,
+          "magnitude": 1.6022,
+          "magnitude_zscore": -0.397,
+          "anomalous": false,
+          "strength": "moderate",
+          "disease_direction": -1.6987,
+          "pushing": "away_from_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0026,
+          "alpha_zscore": -0.518,
+          "magnitude": 0.0041,
+          "magnitude_zscore": -0.332,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0001,
+          "pushing": "away_from_disease"
+        }
+      }
+    },
+    {
+      "index": 49,
+      "prediction": 1,
+      "ground_truth": 0,
+      "prediction_label": "Heart Disease",
+      "ground_truth_label": "No Disease",
+      "verdict_message": "The Vitals chunk is the primary driver (logit push=+2.05 toward disease). Ghost Signal 'Demographics\u2192Vitals' is anomalously active (\u03b1=0.007 (z=+1.61 vs population), magnitude z=3.55) and is pushing toward disease (force=+0.002). Patient demographics (age/sex/cp) over-influenced the cardiovascular vitals interpretation, biasing the prediction pathway.",
+      "verdict_cause": "Ghost Signal Anomaly",
+      "verdict_confidence": 0.95,
+      "dominant_chunk": "Vitals",
+      "features": {
+        "age": 0.46906873966515183,
+        "sex": 0.6937218462755793,
+        "cp": -2.2903320489808183,
+        "trestbps": 2.5578884380453646,
+        "chol": 0.38813746453298614,
+        "thalach": -0.21672630603630724,
+        "fbs": -0.45060590905933257,
+        "restecg": 1.023522981156165,
+        "oldpeak": 2.666203297006778,
+        "slope": 2.3004639318217452,
+        "ca": -0.7401849022711956,
+        "thal": 1.1315476261763457,
+        "exang": -0.7273460373608411
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": 0.5629,
+          "healthy_logit": -0.5074,
+          "disease_push": 1.0703
+        },
+        "Vitals": {
+          "disease_logit": 1.1764,
+          "healthy_logit": -0.8779,
+          "disease_push": 2.0543
+        },
+        "LabDiagnostic": {
+          "disease_logit": 1.0899,
+          "healthy_logit": -0.8702,
+          "disease_push": 1.9601
+        },
+        "Structural": {
+          "disease_logit": 0.8503,
+          "healthy_logit": -1.047,
+          "disease_push": 1.8973
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0073,
+          "alpha_zscore": 1.612,
+          "magnitude": 0.0116,
+          "magnitude_zscore": 3.546,
+          "anomalous": true,
+          "strength": "weak",
+          "disease_direction": 0.0023,
+          "pushing": "toward_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0015,
+          "alpha_zscore": -0.369,
+          "magnitude": 0.0033,
+          "magnitude_zscore": -0.312,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0001,
+          "pushing": "away_from_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.5858,
+          "alpha_zscore": 0.853,
+          "magnitude": 1.9943,
+          "magnitude_zscore": -0.217,
+          "anomalous": false,
+          "strength": "strong",
+          "disease_direction": -2.0248,
+          "pushing": "away_from_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0221,
+          "alpha_zscore": -0.372,
+          "magnitude": 0.0825,
+          "magnitude_zscore": -0.171,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": 0.0023,
+          "pushing": "toward_disease"
+        }
+      }
+    },
+    {
+      "index": 51,
+      "prediction": 0,
+      "ground_truth": 1,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "Heart Disease",
+      "verdict_message": "The Vitals chunk is the primary driver (logit push=-5.84 away from disease). Suspected Ghost Signal contribution from 'Demographics\u2192Vitals' (magnitude z=-1.34, pushing away from disease). Patient demographics (age/sex/cp) over-influenced the cardiovascular vitals interpretation, biasing the prediction pathway.",
+      "verdict_cause": "Suspected Ghost Signal",
+      "verdict_confidence": 0.384,
+      "dominant_chunk": "Vitals",
+      "features": {
+        "age": 1.6894901012490355,
+        "sex": 0.6937218462755793,
+        "cp": 0.853347655315247,
+        "trestbps": -0.12697397856324166,
+        "chol": 1.3683436352101428,
+        "thalach": -1.8274482948009152,
+        "fbs": -0.45060590905933257,
+        "restecg": 1.023522981156165,
+        "oldpeak": 1.1370256598689839,
+        "slope": 0.6729715382642718,
+        "ca": 2.528581964280482,
+        "thal": -0.9313507384682232,
+        "exang": -0.7273460373608411
+      },
+      "chunk_contributions": {
+        "Demographics": {
+          "disease_logit": -0.0375,
+          "healthy_logit": -0.1242,
+          "disease_push": 0.0867
+        },
+        "Vitals": {
+          "disease_logit": -3.0539,
+          "healthy_logit": 2.7894,
+          "disease_push": -5.8432
+        },
+        "LabDiagnostic": {
+          "disease_logit": 2.6626,
+          "healthy_logit": -2.2979,
+          "disease_push": 4.9605
+        },
+        "Structural": {
+          "disease_logit": 0.12,
+          "healthy_logit": -0.1651,
+          "disease_push": 0.2851
+        }
+      },
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0001,
+          "alpha_zscore": -1.344,
+          "magnitude": 0.0006,
+          "magnitude_zscore": -1.339,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0003,
+          "pushing": "away_from_disease"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0,
+          "alpha_zscore": -0.418,
+          "magnitude": 0.0,
+          "magnitude_zscore": -0.373,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": 0.0,
+          "pushing": "toward_disease"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.4586,
+          "alpha_zscore": 0.336,
+          "magnitude": 2.2787,
+          "magnitude_zscore": -0.086,
+          "anomalous": false,
+          "strength": "moderate",
+          "disease_direction": 2.566,
+          "pushing": "toward_disease"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0021,
+          "alpha_zscore": -0.521,
+          "magnitude": 0.0034,
+          "magnitude_zscore": -0.333,
+          "anomalous": false,
+          "strength": "weak",
+          "disease_direction": -0.0003,
+          "pushing": "away_from_disease"
+        }
+      }
+    }
+  ],
+  "correct": [
+    {
+      "index": 0,
+      "prediction": 0,
+      "ground_truth": 0,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "No Disease",
+      "verdict_message": "Prediction correct \u2014 no fault.",
+      "verdict_cause": "None",
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0009,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0006,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.1736,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.1798,
+          "anomalous": false,
+          "strength": "weak"
+        }
+      }
+    },
+    {
+      "index": 1,
+      "prediction": 0,
+      "ground_truth": 0,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "No Disease",
+      "verdict_message": "Prediction correct \u2014 no fault.",
+      "verdict_cause": "None",
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0018,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.008,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.1736,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.015,
+          "anomalous": false,
+          "strength": "weak"
+        }
+      }
+    },
+    {
+      "index": 2,
+      "prediction": 0,
+      "ground_truth": 0,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "No Disease",
+      "verdict_message": "Prediction correct \u2014 no fault.",
+      "verdict_cause": "None",
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0026,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0056,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.4608,
+          "anomalous": false,
+          "strength": "moderate"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0017,
+          "anomalous": false,
+          "strength": "weak"
+        }
+      }
+    },
+    {
+      "index": 4,
+      "prediction": 0,
+      "ground_truth": 0,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "No Disease",
+      "verdict_message": "Prediction correct \u2014 no fault.",
+      "verdict_cause": "None",
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0064,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0242,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.2598,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.0036,
+          "anomalous": false,
+          "strength": "weak"
+        }
+      }
+    },
+    {
+      "index": 5,
+      "prediction": 0,
+      "ground_truth": 0,
+      "prediction_label": "No Disease",
+      "ground_truth_label": "No Disease",
+      "verdict_message": "Prediction correct \u2014 no fault.",
+      "verdict_cause": "None",
+      "ghost_signals": {
+        "Demographics\u2192Vitals": {
+          "alpha": 0.0012,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "Vitals\u2192LabDiagnostic": {
+          "alpha": 0.0107,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "LabDiag\u2192Structural": {
+          "alpha": 0.0458,
+          "anomalous": false,
+          "strength": "weak"
+        },
+        "Demographics\u2192LabDiag": {
+          "alpha": 0.3044,
+          "anomalous": false,
+          "strength": "moderate"
+        }
+      }
+    }
+  ],
+  "stability": {
+    "Demographics\u2192Vitals": {
+      "mean": 0.0034,
+      "std": 0.0024,
+      "stable": true
+    },
+    "Vitals\u2192LabDiagnostic": {
+      "mean": 0.0122,
+      "std": 0.0292,
+      "stable": true
+    },
+    "LabDiag\u2192Structural": {
+      "mean": 0.3758,
+      "std": 0.2462,
+      "stable": false
+    },
+    "Demographics\u2192LabDiag": {
+      "mean": 0.0716,
+      "std": 0.1333,
+      "stable": true
+    }
+  },
+  "final_metrics": {
+    "glassbox": {
+      "acc": 0.7833333333333333,
+      "auc": 0.8493303571428572
+    },
+    "baseline": {
+      "acc": 0.8166666666666667,
+      "auc": 0.8984375
+    },
+    "ablation": {
+      "acc": 0.7,
+      "auc": 0.8203125
+    },
+    "gate_lift": 0.0833
+  },
+  "X_test": [
+    [
+      -1.5279843974721123,
+      0.6937218462755793,
+      -1.2424388142154632,
+      -0.6863203153567012,
+      -1.7419259448231426,
+      1.4387379601939843,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -0.6404052254111061,
+      -1.4414999403128919,
+      0.853347655315247,
+      -0.12697397856324166,
+      0.3692873458661177,
+      0.5886346883459967,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      1.2457005152185323,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.6863203153567012,
+      0.9913412618727748,
+      0.05172735875779407,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.5620606036174542,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.24717394664990022,
+      -1.4414999403128919,
+      0.853347655315247,
+      -0.2388432459219336,
+      1.0101913805396432,
+      0.40966557848326246,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      0.3494040532460302,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -0.08566824287297714,
+      0.6937218462755793,
+      -0.19454557945010806,
+      0.9917186950236776,
+      -0.3281670448080129,
+      0.6781192432773638,
+      -0.45060590905933257,
+      1.023522981156165,
+      0.45739115447440876,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      -1.4170370009644866,
+      -1.4414999403128919,
+      -0.19454557945010806,
+      -0.6863203153567012,
+      -0.761719774145986,
+      1.0360574630028323,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.35812134315752603,
+      0.6937218462755793,
+      -0.19454557945010806,
+      -0.015104711204549731,
+      -0.4789679941429601,
+      1.0360574630028323,
+      -0.45060590905933257,
+      1.023522981156165,
+      1.8166601652635592,
+      -0.9545208552932015,
+      1.438993008763256,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      -0.6404052254111061,
+      -1.4414999403128919,
+      -1.2424388142154632,
+      0.0967645561541422,
+      0.4069875831998545,
+      0.5438924108803131,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.5800161361727776,
+      0.6937218462755793,
+      -0.19454557945010806,
+      0.43237235823021797,
+      -1.2141226221508274,
+      0.23069646862052828,
+      -0.45060590905933257,
+      1.023522981156165,
+      1.6467515389149154,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -0.5294578289034803,
+      -1.4414999403128919,
+      0.853347655315247,
+      -1.245666652150161,
+      0.08653556586309179,
+      0.40966557848326246,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      1.356647911726158,
+      0.6937218462755793,
+      0.853347655315247,
+      -1.8050129889436206,
+      0.9347909058721696,
+      -1.1115718553499783,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.13728903774584467,
+      0.6729715382642718,
+      1.438993008763256,
+      -0.9313507384682232,
+      1.3748614120845168
+    ],
+    [
+      -1.0841948114416093,
+      -1.4414999403128919,
+      -1.2424388142154632,
+      -1.133797384791469,
+      -1.6853755888225375,
+      -0.5299222482960921,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.46906873966515183,
+      0.6937218462755793,
+      0.853347655315247,
+      0.15269918983348815,
+      -0.2904668074742761,
+      0.4991501334146296,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.47710629044313235,
+      0.6729715382642718,
+      -0.7401849022711956,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      -0.6404052254111061,
+      0.6937218462755793,
+      -0.19454557945010806,
+      -0.6863203153567012,
+      -1.1575722661502224,
+      -0.48517997083040854,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      0.7972084071716963,
+      0.6729715382642718,
+      2.528581964280482,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      -0.08566824287297714,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.6863203153567012,
+      -1.1575722661502224,
+      -1.6484791849381808,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      0.28748252812576475,
+      0.6729715382642718,
+      0.3494040532460302,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      -1.0841948114416093,
+      0.6937218462755793,
+      -2.2903320489808183,
+      -1.245666652150161,
+      0.27503675253177573,
+      -0.7983759130901934,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      0.11757390177712099,
+      0.6729715382642718,
+      -0.7401849022711956,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      0.8019109291880292,
+      -1.4414999403128919,
+      0.853347655315247,
+      0.43237235823021797,
+      0.35043722719924936,
+      0.45440785594894606,
+      -0.45060590905933257,
+      1.023522981156165,
+      2.156477417960847,
+      2.3004639318217452,
+      1.438993008763256,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.35812134315752603,
+      -1.4414999403128919,
+      -2.2903320489808183,
+      0.9917186950236776,
+      0.6331890072022753,
+      0.5438924108803131,
+      2.219234102117213,
+      1.023522981156165,
+      -0.05233472457152279,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.35812134315752603,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.2388432459219336,
+      -0.6297689434779072,
+      -0.843118190555877,
+      -0.45060590905933257,
+      1.023522981156165,
+      0.9671170335203403,
+      0.6729715382642718,
+      2.528581964280482,
+      1.1315476261763457,
+      1.3748614120845168
+    ],
+    [
+      0.24717394664990022,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.12697397856324166,
+      -2.232029030161721,
+      -1.5589946300068138,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      0.11757390177712099,
+      0.6729715382642718,
+      0.3494040532460302,
+      1.1315476261763457,
+      1.3748614120845168
+    ],
+    [
+      -2.859353155563622,
+      0.6937218462755793,
+      -1.2424388142154632,
+      -0.12697397856324166,
+      -0.8559703674803281,
+      2.333583509507655,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -1.4170370009644866,
+      0.6937218462755793,
+      -1.2424388142154632,
+      -0.6863203153567012,
+      0.859390431204696,
+      0.5438924108803131,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -0.9732474149339835,
+      0.6937218462755793,
+      0.853347655315247,
+      0.43237235823021797,
+      1.1609923298745903,
+      -1.335283242678396,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      0.6272997808230525,
+      0.6729715382642718,
+      1.438993008763256,
+      1.1315476261763457,
+      1.3748614120845168
+    ],
+    [
+      -0.9732474149339835,
+      -1.4414999403128919,
+      -1.2424388142154632,
+      -1.5253398205468907,
+      -0.8559703674803281,
+      0.9913151855371487,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.24717394664990022,
+      0.6937218462755793,
+      0.853347655315247,
+      -1.245666652150161,
+      1.613395177879432,
+      -0.30621086096767436,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      1.6467515389149154,
+      0.6729715382642718,
+      0.3494040532460302,
+      1.1315476261763457,
+      1.3748614120845168
+    ],
+    [
+      1.0238057222032808,
+      0.6937218462755793,
+      -2.2903320489808183,
+      2.1104113686105967,
+      -0.4224176381423549,
+      0.23069646862052828,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.39215197726881046,
+      0.6729715382642718,
+      -0.7401849022711956,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      1.467595308233784,
+      -1.4414999403128919,
+      -0.19454557945010806,
+      -0.6863203153567012,
+      -0.7240195368122493,
+      -1.5589946300068138,
+      -0.45060590905933257,
+      1.023522981156165,
+      0.37243684130008675,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      1.356647911726158,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.6863203153567012,
+      -0.23391645147367093,
+      -3.52765483849689,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.05233472457152279,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -1.9717739835026156,
+      0.6937218462755793,
+      -0.19454557945010806,
+      -0.12697397856324166,
+      0.011135091195618209,
+      1.662449347522402,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      2.071523104786525,
+      2.3004639318217452,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.8019109291880292,
+      0.6937218462755793,
+      -1.2424388142154632,
+      -0.6863203153567012,
+      0.5954887698685385,
+      -2.0959019595950164,
+      -0.45060590905933257,
+      1.023522981156165,
+      0.28748252812576475,
+      0.6729715382642718,
+      0.3494040532460302,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      0.35812134315752603,
+      0.6937218462755793,
+      -0.19454557945010806,
+      0.43237235823021797,
+      -0.7240195368122493,
+      0.6781192432773638,
+      2.219234102117213,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.24717394664990022,
+      0.6937218462755793,
+      -1.2424388142154632,
+      1.2154572297410615,
+      -0.3281670448080129,
+      0.6333769658116802,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      0.3494040532460302,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -0.6404052254111061,
+      0.6937218462755793,
+      -0.19454557945010806,
+      -0.7981895827153932,
+      -1.8927268941580897,
+      -1.0668295778842947,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.22224335092016656,
+      -0.9545208552932015,
+      2.528581964280482,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -0.8623000184263576,
+      0.6937218462755793,
+      -0.19454557945010806,
+      -0.12697397856324166,
+      0.0676854471962234,
+      1.3045111277969335,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -2.304616173025493,
+      0.6937218462755793,
+      -2.2903320489808183,
+      -0.7981895827153932,
+      -1.2706729781514328,
+      1.0807997404685157,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.46906873966515183,
+      -1.4414999403128919,
+      0.853347655315247,
+      2.334149903327981,
+      -0.0077150274712501875,
+      -0.30621086096767436,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      1.3748614120845168
+    ],
+    [
+      -0.08566824287297714,
+      -1.4414999403128919,
+      -0.19454557945010806,
+      -1.245666652150161,
+      -0.6674691808116441,
+      0.3649233010175789,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      0.45739115447440876,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      1.2457005152185323,
+      0.6937218462755793,
+      -1.2424388142154632,
+      1.5510650318171373,
+      -0.06426538347185537,
+      -1.335283242678396,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      0.6729715382642718,
+      2.528581964280482,
+      0.6158230350152035,
+      1.3748614120845168
+    ],
+    [
+      -0.5294578289034803,
+      0.6937218462755793,
+      -0.19454557945010806,
+      -0.18290861224258761,
+      -1.0067713168152752,
+      0.5886346883459967,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.13622655014227444,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.12697397856324166,
+      0.6331890072022753,
+      -2.0959019595950164,
+      2.219234102117213,
+      1.023522981156165,
+      0.45739115447440876,
+      2.3004639318217452,
+      -0.7401849022711956,
+      1.1315476261763457,
+      1.3748614120845168
+    ],
+    [
+      -1.195142207949235,
+      -1.4414999403128919,
+      -0.19454557945010806,
+      -1.3575359195088528,
+      -2.043527843493037,
+      1.1255420179341993,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.39215197726881046,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.35812134315752603,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.2388432459219336,
+      0.18078615919743377,
+      -0.8878604680215605,
+      -0.45060590905933257,
+      1.023522981156165,
+      1.6467515389149154,
+      0.6729715382642718,
+      1.438993008763256,
+      1.1315476261763457,
+      1.3748614120845168
+    ],
+    [
+      1.356647911726158,
+      0.6937218462755793,
+      0.853347655315247,
+      1.5510650318171373,
+      0.6897393632028804,
+      -1.8721905722665986,
+      -0.45060590905933257,
+      1.023522981156165,
+      0.37243684130008675,
+      0.6729715382642718,
+      2.528581964280482,
+      -0.9313507384682232,
+      1.3748614120845168
+    ],
+    [
+      0.35812134315752603,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.40664714695997145,
+      0.953641024539038,
+      0.9465729080714651,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      1.438993008763256,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      0.025279153634648655,
+      -1.4414999403128919,
+      -1.2424388142154632,
+      0.15269918983348815,
+      0.011135091195618209,
+      0.4991501334146296,
+      -0.45060590905933257,
+      1.023522981156165,
+      0.28748252812576475,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -0.19661563938060292,
+      -1.4414999403128919,
+      0.853347655315247,
+      0.32050309087152606,
+      -0.2904668074742761,
+      0.45440785594894606,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.025279153634648655,
+      -1.4414999403128919,
+      0.853347655315247,
+      -0.2388432459219336,
+      -0.8371202488134596,
+      -0.8878604680215605,
+      -0.45060590905933257,
+      0.016987933297197777,
+      0.7972084071716963,
+      0.6729715382642718,
+      0.3494040532460302,
+      1.1315476261763457,
+      1.3748614120845168
+    ],
+    [
+      0.35812134315752603,
+      -1.4414999403128919,
+      0.853347655315247,
+      -1.8050129889436206,
+      -0.026565146138118584,
+      -1.2457986877470288,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.05233472457152279,
+      0.6729715382642718,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      1.356647911726158,
+      0.6937218462755793,
+      -0.19454557945010806,
+      1.1035879623823694,
+      -0.7051694181453808,
+      0.006985081292110521,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.22224335092016656,
+      0.6729715382642718,
+      -0.7401849022711956,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      0.46906873966515183,
+      0.6937218462755793,
+      -2.2903320489808183,
+      2.5578884380453646,
+      0.38813746453298614,
+      -0.21672630603630724,
+      -0.45060590905933257,
+      1.023522981156165,
+      2.666203297006778,
+      2.3004639318217452,
+      -0.7401849022711956,
+      1.1315476261763457,
+      -0.7273460373608411
+    ],
+    [
+      -0.08566824287297714,
+      -1.4414999403128919,
+      -0.19454557945010806,
+      -1.3575359195088528,
+      0.33158710853238094,
+      0.7676037982087309,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      1.6894901012490355,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.12697397856324166,
+      1.3683436352101428,
+      -1.8274482948009152,
+      -0.45060590905933257,
+      1.023522981156165,
+      1.1370256598689839,
+      0.6729715382642718,
+      2.528581964280482,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -0.5294578289034803,
+      -1.4414999403128919,
+      -1.2424388142154632,
+      -0.6863203153567012,
+      -0.10196562080559217,
+      0.5438924108803131,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      0.0326195886027992,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -1.195142207949235,
+      0.6937218462755793,
+      -0.19454557945010806,
+      -0.12697397856324166,
+      -0.30931692614114453,
+      1.3045111277969335,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.5620606036174542,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      1.3748614120845168
+    ],
+    [
+      -0.3075630358882287,
+      0.6937218462755793,
+      0.853347655315247,
+      -1.133797384791469,
+      -0.36586728214174974,
+      0.45440785594894606,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      0.3494040532460302,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.6909635326804034,
+      0.6937218462755793,
+      0.853347655315247,
+      0.43237235823021797,
+      -0.7994200114797229,
+      -0.5299222482960921,
+      -0.45060590905933257,
+      1.023522981156165,
+      0.7122540939973743,
+      -0.9545208552932015,
+      0.3494040532460302,
+      1.1315476261763457,
+      1.3748614120845168
+    ],
+    [
+      -2.193668776517867,
+      0.6937218462755793,
+      0.853347655315247,
+      -0.3507125132806255,
+      0.6143388885354069,
+      0.2754387460862118,
+      -0.45060590905933257,
+      1.023522981156165,
+      -0.9018778563147419,
+      -0.9545208552932015,
+      -0.7401849022711956,
+      1.1315476261763457,
+      1.3748614120845168
+    ],
+    [
+      -0.3075630358882287,
+      0.6937218462755793,
+      -1.2424388142154632,
+      0.0967645561541422,
+      -0.9125207234809332,
+      0.3649233010175789,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.22224335092016656,
+      -0.9545208552932015,
+      0.3494040532460302,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      0.13622655014227444,
+      0.6937218462755793,
+      -1.2424388142154632,
+      -0.6863203153567012,
+      -0.17736609547306575,
+      0.857088353140098,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      -0.9018778563147419,
+      2.3004639318217452,
+      -0.7401849022711956,
+      -0.9313507384682232,
+      -0.7273460373608411
+    ],
+    [
+      -1.4170370009644866,
+      0.6937218462755793,
+      0.853347655315247,
+      0.20863382351283413,
+      1.236392804542064,
+      -1.1115718553499783,
+      -0.45060590905933257,
+      -0.9895471145617695,
+      0.6272997808230525,
+      0.6729715382642718,
+      -0.7401849022711956,
+      0.6158230350152035,
+      1.3748614120845168
+    ]
+  ],
+  "y_test": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    1,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    1,
+    0,
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    1
+  ]
+}
