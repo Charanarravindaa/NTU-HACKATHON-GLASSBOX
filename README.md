@@ -102,6 +102,10 @@ glassbox/
 │       ├── Normal/   (10 real CUHK Avenue frames)
 │       └── Anomaly/  (10 real CUHK Avenue frames)
 │
+├── ablation/
+│   ├── run_ablation.py            ← baseline + component ablation study (uses cached features)
+│   └── ablation_results.json      ← results: test AUC per variant
+│
 └── artefacts/                 ← pre-trained weights + metadata
     ├── crime_vision.pt              — CNN + GlassboxNetV2 (MoE sub-chunks)
     ├── temporal_lstm.pt             — LSTM temporal head
@@ -236,7 +240,7 @@ This is the intended deployment lifecycle: train once per installation on normal
 
 | Limitation | Status |
 |-----------|--------|
-| Val/test AUC gap (+3.1pp) | Self-healing optimises on val. Test AUC (0.920) is the honest held-out number. |
+| Val/test AUC gap (+3.1pp) | Self-healing optimises on val. Test AUC (0.920) is the honest held-out number. Ablation runs (25 epochs) show higher test AUC — different training run, not a contradiction. |
 | Sub-expert labels are statistical | Lift scores auto-generated; not hand-verified per sub-expert. |
 | Alert log is in-memory | Resets on server restart. Production would persist to disk or a log sink. |
 

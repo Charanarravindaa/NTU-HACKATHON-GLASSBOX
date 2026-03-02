@@ -1,0 +1,70 @@
+{
+  "variants": [
+    {
+      "name": "Linear Baseline",
+      "val_auc": 0.9823,
+      "test_auc": 0.9432,
+      "elapsed_s": 0.9
+    },
+    {
+      "name": "MLP Baseline",
+      "val_auc": 0.9849,
+      "test_auc": 0.966,
+      "elapsed_s": 0.8
+    },
+    {
+      "name": "GlassboxNet (no healing)",
+      "val_auc": 0.9801,
+      "test_auc": 0.9518,
+      "elapsed_s": 10.4
+    },
+    {
+      "name": "Full GlassboxNet + Healing",
+      "val_auc": 0.9894,
+      "test_auc": 0.9474,
+      "elapsed_s": 20.6
+    },
+    {
+      "name": "Full System (reference)",
+      "val_auc": 0.9894,
+      "test_auc": 0.9474,
+      "elapsed_s": 19.1
+    },
+    {
+      "name": "w/o Ghost Gates",
+      "val_auc": 0.9888,
+      "test_auc": 0.9426,
+      "elapsed_s": 16.9,
+      "delta": -0.0048
+    },
+    {
+      "name": "w/o Order Decomposition",
+      "val_auc": 0.9935,
+      "test_auc": 0.9523,
+      "elapsed_s": 15.1,
+      "delta": 0.0049
+    },
+    {
+      "name": "w/o MoSE  (K=1)",
+      "val_auc": 0.9948,
+      "test_auc": 0.9518,
+      "elapsed_s": 8.0,
+      "delta": 0.0044
+    },
+    {
+      "name": "w/o Self-Healing",
+      "val_auc": 0.9801,
+      "test_auc": 0.9518,
+      "elapsed_s": 9.2,
+      "delta": 0.0044
+    }
+  ],
+  "reference_test_auc": 0.9474,
+  "epochs": 25,
+  "heal_rounds": 2,
+  "seed": 42,
+  "feature_shape": [
+    1520,
+    128
+  ]
+}
