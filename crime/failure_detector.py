@@ -139,6 +139,16 @@ class FailureModeDetector:
             pred = int(logits.argmax(dim=1).item())
 
         true_c = stats['true_class']
+
+        # If the model now correctly classifies this centroid (post-healing),
+        # use the most-confused wrong class for blame attribution — otherwise
+        # blame scores would all be zero (pred_push == true_push trivially).
+        blame_pred = pred
+        if pred == true_c and logits.shape[1] > 1:
+            probs = torch.softmax(logits, dim=1)[0].clone()
+            probs[true_c] = -1.0
+            blame_pred = int(probs.argmax().item())
+
         result = {
             'centroid_pred':      pred,
             'centroid_pred_name': self._cn(pred),
@@ -148,8 +158,8 @@ class FailureModeDetector:
         }
 
         if hasattr(self.model, 'get_class_pair_contributions'):
-            blame = self.model.get_class_pair_contributions(x_tensor, pred, true_c)
-            ranked = sorted(blame.items(), key=lambda kv: kv[1]['blame'], reverse=True)
+            blame = self.model.get_class_pair_contributions(x_tensor, blame_pred, true_c)
+            ranked = sorted(blame.items(), key=lambda kv: abs(kv[1]['blame']), reverse=True)
             result['blame_scores']   = {k: v['blame'] for k, v in blame.items()}
             result['dominant_chunk'] = ranked[0][0] if ranked else 'Unknown'
             result['ranked_chunks']  = [(k, v['blame']) for k, v in ranked]
