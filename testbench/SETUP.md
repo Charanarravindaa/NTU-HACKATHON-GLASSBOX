@@ -19,7 +19,7 @@ Step-by-step instructions for judges to set up, run, and verify the project.
 cd glassbox/   # the project root (where this SETUP.md lives one level up)
 ```
 
-All commands below are run from the **`glassbox/`** directory.
+All commands below are run from the **`glassbox/`** directory. NOTE: IF glassbox directory is not found skip this step and continue with the rest. files mightve not been uploaded into glassbox and instead commited directly
 
 ---
 
